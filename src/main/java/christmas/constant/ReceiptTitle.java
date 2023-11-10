@@ -1,6 +1,6 @@
 package christmas.constant;
 
-public enum SpecsTitle {
+public enum ReceiptTitle {
     ORDER_MENU("주문 메뉴"),
     AMOUNT_BEFORE_DISCOUNT("할인 전 총주문 금액"),
     GIFT_MENU("증정 메뉴"),
@@ -11,7 +11,7 @@ public enum SpecsTitle {
 
     private final String message;
 
-    SpecsTitle(String message) {
+    ReceiptTitle(String message) {
         this.message = message;
     }
 
