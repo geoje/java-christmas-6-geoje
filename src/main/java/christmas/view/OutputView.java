@@ -9,7 +9,7 @@ public class OutputView {
         System.out.printf(message.toString() + System.lineSeparator(), args);
     }
 
-    public static void printIntroduction() {
-        printGeneralMessage(NOTIFY_INTRODUCTION);
+    public static void printIntroduction(int month) {
+        printGeneralMessage(NOTIFY_INTRODUCTION, month);
     }
 }
