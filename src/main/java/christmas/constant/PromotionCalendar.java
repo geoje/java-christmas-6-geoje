@@ -9,13 +9,13 @@ public enum PromotionCalendar {
 
     PromotionCalendar(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
+        calendar.set(year, month, day, 0, 0, 0);
         this.calendar = calendar;
     }
 
-    public static boolean isDuringPromotion(Calendar calendar) {
-        return calendar.get(Calendar.YEAR) == PERIOD_MONTH.calendar.get(Calendar.YEAR) &&
-                calendar.get(Calendar.MONTH) == PERIOD_MONTH.calendar.get(Calendar.MONTH);
+    public boolean containDay(int day) {
+        return calendar.getActualMinimum(Calendar.DAY_OF_MONTH) <= day &&
+                day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     public int get(int field) {
