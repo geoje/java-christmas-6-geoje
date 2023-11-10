@@ -1,9 +1,9 @@
 package christmas.constant;
 
 public enum Menu {
-    MUSHROOM_SOUP("양송이수프", MenuType.APPETIZRR, 6000),
-    TAPAS("타파스", MenuType.APPETIZRR, 5500),
-    CAESAR_SALAD("시저샐러드", MenuType.APPETIZRR, 8000),
+    MUSHROOM_SOUP("양송이수프", MenuType.APPETIZER, 6000),
+    TAPAS("타파스", MenuType.APPETIZER, 5500),
+    CAESAR_SALAD("시저샐러드", MenuType.APPETIZER, 8000),
 
     T_BONE_STEAK("티본스테이크", MenuType.MAIN, 55000),
     BARBECUE_RIBS("바비큐립", MenuType.MAIN, 54000),
