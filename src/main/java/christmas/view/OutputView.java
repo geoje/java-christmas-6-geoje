@@ -12,7 +12,7 @@ public class OutputView {
         System.out.printf(message + "%n", args);
     }
 
-    private static void printErrorMessage(String message) {
+    public static void printErrorMessage(String message) {
         System.out.println(EXCEPTION_PREFIX + message);
     }
 
