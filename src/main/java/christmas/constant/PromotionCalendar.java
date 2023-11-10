@@ -18,8 +18,8 @@ public enum PromotionCalendar {
                 day <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    public int get(int field) {
-        return calendar.get(field);
+    public int getDay() {
+        return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
     public int getRealMonth() {
