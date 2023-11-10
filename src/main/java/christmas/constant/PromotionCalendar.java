@@ -3,8 +3,7 @@ package christmas.constant;
 import java.util.Calendar;
 
 public enum PromotionCalendar {
-    START(2023, Calendar.DECEMBER, 1),
-    END(2023, Calendar.DECEMBER, 31);
+    PERIOD_MONTH(2023, Calendar.DECEMBER, 1);
 
     private final Calendar calendar;
 
@@ -15,10 +14,15 @@ public enum PromotionCalendar {
     }
 
     public static boolean isDuringPromotion(Calendar calendar) {
-        return calendar.compareTo(START.calendar) >= 0 && calendar.compareTo(END.calendar) <= 0;
+        return calendar.get(Calendar.YEAR) == PERIOD_MONTH.calendar.get(Calendar.YEAR) &&
+                calendar.get(Calendar.MONTH) == PERIOD_MONTH.calendar.get(Calendar.MONTH);
     }
 
     public int get(int field) {
         return calendar.get(field);
+    }
+
+    public int getRealMonth() {
+        return calendar.get(Calendar.MONTH) + 1;
     }
 }
