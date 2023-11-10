@@ -8,7 +8,7 @@ import static christmas.constant.GeneralMessage.ASK_VISITING_DAY;
 
 public class InputView {
     private static String readWithGeneralMessage(GeneralMessage message, Object... args) {
-        System.out.printf(message.toString() + System.lineSeparator(), args);
+        System.out.printf(message.toString() + "%n", args);
         return Console.readLine().trim();
     }
 

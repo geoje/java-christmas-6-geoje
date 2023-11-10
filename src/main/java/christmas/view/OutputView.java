@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.constant.GeneralMessage;
+import christmas.constant.ReceiptTitle;
 
 import static christmas.constant.ErrorMessage.EXCEPTION_PREFIX;
 import static christmas.constant.GeneralMessage.NOTIFY_INTRODUCTION;
@@ -8,7 +9,7 @@ import static christmas.constant.GeneralMessage.NOTIFY_PREVIEW;
 
 public class OutputView {
     private static void printGeneralMessage(GeneralMessage message, Object... args) {
-        System.out.printf(message + System.lineSeparator(), args);
+        System.out.printf(message + "%n", args);
     }
 
     private static void printErrorMessage(String message) {
@@ -21,5 +22,9 @@ public class OutputView {
 
     public static void printPreview(int month, int day) {
         printGeneralMessage(NOTIFY_PREVIEW, month, day);
+    }
+
+    public static void printReceipt(ReceiptTitle title, String message) {
+        System.out.printf("<%s>%n%s%n%n", title, message);
     }
 }
