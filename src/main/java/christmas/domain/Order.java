@@ -10,4 +10,8 @@ public class Order {
     public Order(List<Menu> menus) {
         this.menus = menus;
     }
+
+    public static Order from(String menus) {
+        return new Order(List.of());
+    }
 }
