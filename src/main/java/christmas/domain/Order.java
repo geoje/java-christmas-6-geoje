@@ -89,7 +89,7 @@ public class Order {
     @Override
     public String toString() {
         return menus.entrySet().stream()
-                .map(entry -> String.format(CONTENT_ORDER_MENU.toString(), entry.getKey(), entry.getValue()))
+                .map(entry -> String.format(CONTENT_ORDER_MENU.toString(), entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 }
