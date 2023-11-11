@@ -69,4 +69,13 @@ public class OrderTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ORDER_INVALID.toString());
     }
+
+    @ParameterizedTest
+    @DisplayName("메뉴를 최대 수량 이상 시켰을 경우 예외 발생")
+    @ValueSource(strings = {"해산물파스타-11,레드와인-10"})
+    void validateMaxMenuCount(String menu) {
+        assertThatCode(() -> Order.from(menu))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ORDER_MENU_COUNT_EXCEED.toString());
+    }
 }
