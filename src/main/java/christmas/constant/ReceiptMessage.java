@@ -11,7 +11,8 @@ public enum ReceiptMessage {
 
     CONTENT_ORDER_MENU("%s %d개"),
     CONTENT_AMOUNT("%s원"),
-    NOTHING("없음");
+    CONTENT_BENEFIT("%s: %s원"),
+    CONTENT_NOTHING("없음");
 
     private final String message;
 
