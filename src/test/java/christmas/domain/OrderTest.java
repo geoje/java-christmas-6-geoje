@@ -1,14 +1,25 @@
 package christmas.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.Map;
 
 import static christmas.constant.ErrorMessage.ORDER_INVALID;
 import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class OrderTest {
+    @Test
+    @DisplayName("메뉴가 없는 주문 생성")
+    void newWithoutMenu() {
+        assertThatCode(() -> {
+            new Order(Map.of());
+        }).doesNotThrowAnyException();
+    }
+
     @ParameterizedTest
     @DisplayName("from 함수를 통한 생성")
     @ValueSource(strings = {"해산물파스타-2,레드와인-1,초코케이크-1"})
