@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.constant.Menu;
+import christmas.constant.MenuType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,7 @@ public class Order {
 
     public Order(Map<Menu, Integer> menus) {
         validateMaxMenuCount(menus);
+        validateNotOnlyDrink(menus);
         this.menus = menus;
     }
 
@@ -81,6 +83,12 @@ public class Order {
     private static void validateNotDuplicated(List<Map.Entry<Menu, Integer>> entries) {
         if (entries.stream().map(Map.Entry::getKey).collect(Collectors.toSet()).size()
                 != entries.size()) {
+            throw new IllegalArgumentException(ORDER_INVALID.toString());
+        }
+    }
+
+    private static void validateNotOnlyDrink(Map<Menu, Integer> menus) {
+        if (menus.keySet().stream().allMatch(menu -> menu.getType().equals(MenuType.DRINK))) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
