@@ -3,11 +3,15 @@ package christmas.view;
 import christmas.constant.GeneralMessage;
 import christmas.constant.ReceiptMessage;
 
+import java.text.DecimalFormat;
+
 import static christmas.constant.ErrorMessage.EXCEPTION_PREFIX;
 import static christmas.constant.GeneralMessage.NOTIFY_INTRODUCTION;
 import static christmas.constant.GeneralMessage.NOTIFY_PREVIEW;
 
 public class OutputView {
+    private static final DecimalFormat formatter = new DecimalFormat("#,###");
+
     private static void printGeneralMessage(GeneralMessage message, Object... args) {
         System.out.printf(message + "%n", args);
     }
@@ -28,5 +32,9 @@ public class OutputView {
     public static void printPreview(int month, int day) {
         printGeneralMessage(NOTIFY_PREVIEW, month, day);
         System.out.println();
+    }
+
+    public static String formatAmount(int amount) {
+        return formatter.format(amount);
     }
 }
