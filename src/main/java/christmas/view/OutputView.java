@@ -13,7 +13,8 @@ public class OutputView {
     }
 
     public static void printReceiptMessage(ReceiptMessage titleMessage, String content, Object... args) {
-        System.out.printf("%s%n%s%n%n", titleMessage.toStringWithAngleBracket(), content);
+        System.out.printf(titleMessage.toStringWithAngleBracket() + "%n", args);
+        System.out.printf("%s%n%n", content);
     }
 
     public static void printErrorMessage(String message) {
@@ -26,6 +27,6 @@ public class OutputView {
 
     public static void printPreview(int month, int day) {
         printGeneralMessage(NOTIFY_PREVIEW, month, day);
+        System.out.println();
     }
-
 }
