@@ -1,5 +1,8 @@
 package christmas.domain;
 
+import christmas.constant.PromotionCalendar;
+
+import java.util.Calendar;
 import java.util.regex.Pattern;
 
 import static christmas.constant.ErrorMessage.DAY_INVALID;
@@ -27,5 +30,15 @@ public record VisitingDay(int day) {
         if (!PERIOD_MONTH.containDay(day)) {
             throw new IllegalArgumentException(DAY_INVALID.toString());
         }
+    }
+
+    public boolean isWeekend() {
+        Calendar calendar = PromotionCalendar.getPeriodCalendarWithDay(day);
+        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
+                calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+    }
+
+    public boolean isWeekday() {
+        return !isWeekend();
     }
 }
