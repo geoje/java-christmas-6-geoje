@@ -6,6 +6,8 @@ import static christmas.constant.ErrorMessage.DAY_INVALID;
 import static christmas.constant.PromotionCalendar.PERIOD_MONTH;
 
 public record VisitingDay(int day) {
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
+
     public VisitingDay {
         validateCanPeriodDay(day);
     }
@@ -16,7 +18,7 @@ public record VisitingDay(int day) {
     }
 
     private static void validateNumeric(String day) {
-        if (!Pattern.compile("-?\\d+").matcher(day).matches()) {
+        if (!NUMBER_PATTERN.matcher(day).matches()) {
             throw new IllegalArgumentException(DAY_INVALID.toString());
         }
     }

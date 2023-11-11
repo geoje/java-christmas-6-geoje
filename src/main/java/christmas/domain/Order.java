@@ -14,11 +14,12 @@ import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
 import static christmas.constant.ReceiptMessage.CONTENT_ORDER_MENU;
 
 public class Order {
-    private static String MENU_ENTRY_DELIMITER = ",";
-    private static String MENU_NAME_COUNT_DELIMITER = "-";
-    private static int MAX_MENU_COUNT = 20;
+    private static final String MENU_ENTRY_DELIMITER = ",";
+    private static final String MENU_NAME_COUNT_DELIMITER = "-";
+    private static final int MAX_MENU_COUNT = 20;
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
 
-    private Map<Menu, Integer> menus;
+    private final Map<Menu, Integer> menus;
 
     public Order(Map<Menu, Integer> menus) {
         validateMaxMenuCount(menus);
@@ -59,7 +60,7 @@ public class Order {
     }
 
     private static void validateNumeric(String count) {
-        if (!Pattern.compile("-?\\d+").matcher(count).matches()) {
+        if (!NUMBER_PATTERN.matcher(count).matches()) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
