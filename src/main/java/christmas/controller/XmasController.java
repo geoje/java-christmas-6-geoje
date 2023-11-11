@@ -8,7 +8,7 @@ import christmas.view.OutputView;
 import java.util.function.Supplier;
 
 import static christmas.constant.PromotionCalendar.PERIOD_MONTH;
-import static christmas.constant.ReceiptMessage.TITLE_ORDER_MENU;
+import static christmas.constant.ReceiptMessage.*;
 
 public class XmasController {
     public static void run() {
@@ -16,7 +16,8 @@ public class XmasController {
         VisitingDay visitingDay = requestVisitingDay();
         Order order = requestOrder();
         notifyPreview();
-        notifyPromotions(visitingDay, order);
+        notifyOrder(order);
+        notifyPromotion(visitingDay, order);
     }
 
     private static <T> T requestUntilValidated(Supplier<T> supplier) {
@@ -46,7 +47,12 @@ public class XmasController {
         OutputView.printPreview(PERIOD_MONTH.getRealMonth(), PERIOD_MONTH.getDay());
     }
 
-    private static void notifyPromotions(VisitingDay visitingDay, Order order) {
+    private static void notifyOrder(Order order) {
         OutputView.printReceiptMessage(TITLE_ORDER_MENU, order.toString());
+        OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT,
+                String.format(CONTENT_AMOUNT.toString(), OutputView.formatAmount(order.totalAmount())));
+    }
+
+    private static void notifyPromotion(VisitingDay visitingDay, Order order) {
     }
 }
