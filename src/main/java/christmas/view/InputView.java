@@ -3,8 +3,8 @@ package christmas.view;
 import camp.nextstep.edu.missionutils.Console;
 import christmas.constant.GeneralMessage;
 
-import static christmas.constant.GeneralMessage.ASK_ORDER;
-import static christmas.constant.GeneralMessage.ASK_VISITING_DAY;
+import static christmas.constant.GeneralMessage.REQUEST_ORDER;
+import static christmas.constant.GeneralMessage.REQUEST_VISITING_DAY;
 
 public class InputView {
     private static String readWithGeneralMessage(GeneralMessage message, Object... args) {
@@ -12,11 +12,11 @@ public class InputView {
         return Console.readLine().trim();
     }
 
-    public static String askVisitingDay(int month) {
-        return readWithGeneralMessage(ASK_VISITING_DAY, month);
+    public static String readVisitingDay(int month) {
+        return readWithGeneralMessage(REQUEST_VISITING_DAY, month);
     }
 
-    public static String askOrder() {
-        return readWithGeneralMessage(ASK_ORDER);
+    public static String readOrder() {
+        return readWithGeneralMessage(REQUEST_ORDER);
     }
 }

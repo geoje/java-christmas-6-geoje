@@ -35,11 +35,11 @@ public class XmasController {
 
     private static VisitingDay requestVisitingDay() {
         return requestUntilValidated(
-                () -> VisitingDay.from(InputView.askVisitingDay(PERIOD_MONTH.getRealMonth())));
+                () -> VisitingDay.from(InputView.readVisitingDay(PERIOD_MONTH.getRealMonth())));
     }
 
     private static Order requestOrder() {
-        return requestUntilValidated(() -> Order.from(InputView.askOrder()));
+        return requestUntilValidated(() -> Order.from(InputView.readOrder()));
     }
 
     private static void notifyPreview() {
