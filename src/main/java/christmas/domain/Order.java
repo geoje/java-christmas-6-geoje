@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.constant.Menu;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -20,21 +21,30 @@ public class Order {
     }
 
     public static Order from(String menus) {
-        return new Order(Arrays.stream(menus.split(MENU_ENTRY_DELIMITER))
+        List<Map.Entry<String, Integer>> entries = Arrays.stream(menus.split(MENU_ENTRY_DELIMITER))
                 .filter(menu -> !menu.isBlank())
-                .map(Order::parseNameAndCount)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
+                .map(Order::parseNameAndCountWithValidation)
+                .toList();
+        return new Order(convertEntriesToMapWithValidation(entries));
     }
 
-    private static Map.Entry<String, Integer> parseNameAndCount(String menu) {
+    private static Map.Entry<String, Integer> parseNameAndCountWithValidation(String menu) {
         validateNameCountDelimiter(menu);
         int indexDelimiter = menu.lastIndexOf(MENU_NAME_COUNT_DELIMITER);
         String name = menu.substring(0, indexDelimiter);
         String count = menu.substring(indexDelimiter + 1);
 
         validateNumeric(count);
+        int parsedCount = Integer.parseInt(count);
+
+        validateCount(parsedCount);
         validateExistMenu(name);
-        return Map.entry(name, Integer.parseInt(count));
+        return Map.entry(name, parsedCount);
+    }
+
+    private static Map<String, Integer> convertEntriesToMapWithValidation(List<Map.Entry<String, Integer>> menus) {
+        validateNotDuplicated(menus);
+        return menus.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private static void validateNameCountDelimiter(String menu) {
@@ -49,8 +59,21 @@ public class Order {
         }
     }
 
+    private static void validateCount(int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException(ORDER_INVALID.toString());
+        }
+    }
+
     private static void validateExistMenu(String name) {
-        if (Arrays.stream(Menu.values()).noneMatch(menu -> menu.getName().equals(name))) {
+        if (Menu.getByName(name).isEmpty()) {
+            throw new IllegalArgumentException(ORDER_INVALID.toString());
+        }
+    }
+
+    private static void validateNotDuplicated(List<Map.Entry<String, Integer>> entries) {
+        if (entries.stream().map(Map.Entry::getKey).collect(Collectors.toSet()).size()
+                != entries.size()) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
