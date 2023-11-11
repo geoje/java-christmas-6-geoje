@@ -17,7 +17,7 @@ public class XmasController {
         VisitingDay visitingDay = requestVisitingDay();
         Order order = requestOrder();
 
-        notifyPreview();
+        notifyPreview(visitingDay);
         notifyOrder(order);
         notifyPromotion(new XmasPromotion(visitingDay, order));
     }
