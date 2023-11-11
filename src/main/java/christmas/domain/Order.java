@@ -14,21 +14,23 @@ import static christmas.constant.ReceiptMessage.CONTENT_ORDER_MENU;
 public class Order {
     private static String MENU_ENTRY_DELIMITER = ",";
     private static String MENU_NAME_COUNT_DELIMITER = "-";
-    private Map<String, Integer> menus;
+    private static int MAX_MENU_COUNT = 20;
+    private Map<Menu, Integer> menus;
 
-    public Order(Map<String, Integer> menus) {
+    public Order(Map<Menu, Integer> menus) {
+        validateMaxMenuCount(menus);
         this.menus = menus;
     }
 
     public static Order from(String menus) {
-        List<Map.Entry<String, Integer>> entries = Arrays.stream(menus.split(MENU_ENTRY_DELIMITER))
+        List<Map.Entry<Menu, Integer>> entries = Arrays.stream(menus.split(MENU_ENTRY_DELIMITER))
                 .filter(menu -> !menu.isBlank())
                 .map(Order::parseNameAndCountWithValidation)
                 .toList();
         return new Order(convertEntriesToMapWithValidation(entries));
     }
 
-    private static Map.Entry<String, Integer> parseNameAndCountWithValidation(String menu) {
+    private static Map.Entry<Menu, Integer> parseNameAndCountWithValidation(String menu) {
         validateNameCountDelimiter(menu);
         int indexDelimiter = menu.lastIndexOf(MENU_NAME_COUNT_DELIMITER);
         String name = menu.substring(0, indexDelimiter);
@@ -39,10 +41,10 @@ public class Order {
 
         validateCount(parsedCount);
         validateExistMenu(name);
-        return Map.entry(name, parsedCount);
+        return Map.entry(Menu.getByName(name).get(), parsedCount);
     }
 
-    private static Map<String, Integer> convertEntriesToMapWithValidation(List<Map.Entry<String, Integer>> menus) {
+    private static Map<Menu, Integer> convertEntriesToMapWithValidation(List<Map.Entry<Menu, Integer>> menus) {
         validateNotDuplicated(menus);
         return menus.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
@@ -71,10 +73,16 @@ public class Order {
         }
     }
 
-    private static void validateNotDuplicated(List<Map.Entry<String, Integer>> entries) {
+    private static void validateNotDuplicated(List<Map.Entry<Menu, Integer>> entries) {
         if (entries.stream().map(Map.Entry::getKey).collect(Collectors.toSet()).size()
                 != entries.size()) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
+        }
+    }
+
+    private static void validateMaxMenuCount(Map<Menu, Integer> menus) {
+        if (menus.values().stream().mapToInt(Integer::intValue).sum() > MAX_MENU_COUNT) {
+            throw new IllegalArgumentException(ORDER_MENU_COUNT_EXCEED.toString());
         }
     }
 
