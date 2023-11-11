@@ -10,7 +10,8 @@ public enum ReceiptMessage {
     TITLE_EVENT_BADGE("%d월 이벤트 배지"),
 
     CONTENT_ORDER_MENU("%s %d개"),
-    CONTENT_AMOUNT("%s원");
+    CONTENT_AMOUNT("%s원"),
+    NOTHING("없음");
 
     private final String message;
 
