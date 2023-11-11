@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static christmas.constant.ErrorMessage.DAY_INVALID;
-import static christmas.constant.ErrorMessage.DAY_NOT_NUMERIC;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class VisitingDayTest {
@@ -29,7 +28,7 @@ public class VisitingDayTest {
     void validateNumeric(String day) {
         assertThatCode(() -> VisitingDay.from(day))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(DAY_NOT_NUMERIC.toString());
+                .hasMessageContaining(DAY_INVALID.toString());
     }
 
     @ParameterizedTest

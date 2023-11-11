@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static christmas.constant.ErrorMessage.*;
+import static christmas.constant.ErrorMessage.ORDER_INVALID;
+import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
 import static christmas.constant.ReceiptMessage.CONTENT_ORDER_MENU;
 
 public class Order {
@@ -51,13 +52,13 @@ public class Order {
 
     private static void validateNameCountDelimiter(String menu) {
         if (!menu.contains(MENU_NAME_COUNT_DELIMITER)) {
-            throw new IllegalArgumentException(ORDER_NO_HYPHEN.toString());
+            throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
 
     private static void validateNumeric(String count) {
         if (!Pattern.compile("-?\\d+").matcher(count).matches()) {
-            throw new IllegalArgumentException(ORDER_COUNT_NOT_NUMERIC.toString());
+            throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
 

@@ -4,7 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static christmas.constant.ErrorMessage.*;
+import static christmas.constant.ErrorMessage.ORDER_INVALID;
+import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class OrderTest {
@@ -31,7 +32,7 @@ public class OrderTest {
     void validateNameCountDelimiter(String menu) {
         assertThatCode(() -> Order.from(menu))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ORDER_NO_HYPHEN.toString());
+                .hasMessageContaining(ORDER_INVALID.toString());
     }
 
     @ParameterizedTest
@@ -40,7 +41,7 @@ public class OrderTest {
     void validateNumeric(String menu) {
         assertThatCode(() -> Order.from(menu))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ORDER_COUNT_NOT_NUMERIC.toString());
+                .hasMessageContaining(ORDER_INVALID.toString());
     }
 
     @ParameterizedTest

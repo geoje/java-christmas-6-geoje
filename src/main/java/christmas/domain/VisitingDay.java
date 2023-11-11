@@ -3,7 +3,6 @@ package christmas.domain;
 import java.util.regex.Pattern;
 
 import static christmas.constant.ErrorMessage.DAY_INVALID;
-import static christmas.constant.ErrorMessage.DAY_NOT_NUMERIC;
 import static christmas.constant.PromotionCalendar.PERIOD_MONTH;
 
 public record VisitingDay(int day) {
@@ -18,7 +17,7 @@ public record VisitingDay(int day) {
 
     private static void validateNumeric(String day) {
         if (!Pattern.compile("-?\\d+").matcher(day).matches()) {
-            throw new IllegalArgumentException(DAY_NOT_NUMERIC.toString());
+            throw new IllegalArgumentException(DAY_INVALID.toString());
         }
     }
 
