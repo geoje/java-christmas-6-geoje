@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 
 import static christmas.constant.ErrorMessage.ORDER_INVALID;
 import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
+import static christmas.constant.ReceiptMessage.CONTENT_NOTHING;
 import static christmas.constant.ReceiptMessage.CONTENT_ORDER_MENU;
-import static christmas.constant.ReceiptMessage.NOTHING;
 
 public class Order {
     private static final String MENU_ENTRY_DELIMITER = ",";
@@ -102,7 +102,7 @@ public class Order {
     @Override
     public String toString() {
         if (menus.isEmpty()) {
-            return NOTHING.toString();
+            return CONTENT_NOTHING.toString();
         }
         return menus.entrySet().stream()
                 .map(entry -> String.format(CONTENT_ORDER_MENU.toString(), entry.getKey().getName(), entry.getValue()))
