@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Order;
 import christmas.domain.VisitingDay;
+import christmas.domain.promotion.XmasPromotion;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -15,9 +16,10 @@ public class XmasController {
         notifyIntroduction();
         VisitingDay visitingDay = requestVisitingDay();
         Order order = requestOrder();
+
         notifyPreview();
         notifyOrder(order);
-        notifyPromotion(visitingDay, order);
+        notifyPromotion(new XmasPromotion(visitingDay, order));
     }
 
     private static <T> T requestUntilValidated(Supplier<T> supplier) {
@@ -53,6 +55,7 @@ public class XmasController {
                 String.format(CONTENT_AMOUNT.toString(), OutputView.formatAmount(order.totalAmount())));
     }
 
-    private static void notifyPromotion(VisitingDay visitingDay, Order order) {
+    private static void notifyPromotion(XmasPromotion promotion) {
+        OutputView.printReceiptMessage(TITLE_GIFT_MENU, promotion.giftMenu().toString());
     }
 }
