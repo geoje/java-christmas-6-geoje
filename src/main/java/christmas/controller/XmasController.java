@@ -45,8 +45,8 @@ public class XmasController {
         return requestUntilValidated(() -> Order.from(InputView.readOrder()));
     }
 
-    private static void notifyPreview() {
-        OutputView.printPreview(PERIOD_MONTH.getRealMonth(), PERIOD_MONTH.getDay());
+    private static void notifyPreview(VisitingDay visitingDay) {
+        OutputView.printPreview(PERIOD_MONTH.getRealMonth(), visitingDay.day());
     }
 
     private static void notifyOrder(Order order) {
