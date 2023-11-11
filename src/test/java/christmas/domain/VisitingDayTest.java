@@ -1,10 +1,12 @@
 package christmas.domain;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static christmas.constant.ErrorMessage.DAY_INVALID;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class VisitingDayTest {
@@ -38,5 +40,17 @@ public class VisitingDayTest {
         assertThatCode(() -> new VisitingDay(day))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(DAY_INVALID.toString());
+    }
+
+    @Test
+    @DisplayName("2023년 12월 10일 일요일이 주말 인지 판별")
+    void isWeekend() {
+        assertThat(new VisitingDay(10).isWeekend()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("2023년 12월 8일 금요일이 평일 인지 판별")
+    void isWeekday() {
+        assertThat(new VisitingDay(8).isWeekday()).isEqualTo(true);
     }
 }
