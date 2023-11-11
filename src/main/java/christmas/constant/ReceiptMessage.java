@@ -9,7 +9,8 @@ public enum ReceiptMessage {
     TITLE_AMOUNT_AFTER_DISCOUNT("할인 후 예상 결제 금액"),
     TITLE_EVENT_BADGE("%d월 이벤트 배지"),
 
-    CONTENT_ORDER_MENU("%s %d개");
+    CONTENT_ORDER_MENU("%s %d개"),
+    CONTENT_AMOUNT("%s원");
 
     private final String message;
 
