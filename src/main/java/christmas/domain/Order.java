@@ -5,6 +5,7 @@ import christmas.constant.Menu;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ public class Order {
     private static String MENU_ENTRY_DELIMITER = ",";
     private static String MENU_NAME_COUNT_DELIMITER = "-";
     private static int MAX_MENU_COUNT = 20;
+
     private Map<Menu, Integer> menus;
 
     public Order(Map<Menu, Integer> menus) {
@@ -41,7 +43,7 @@ public class Order {
         int parsedCount = Integer.parseInt(count);
 
         validateCount(parsedCount);
-        validateExistMenu(name);
+        validateExistMenu(name); // Menu.getByName(name).isPresent() checked here
         return Map.entry(Menu.getByName(name).get(), parsedCount);
     }
 
@@ -92,5 +94,11 @@ public class Order {
         return menus.entrySet().stream()
                 .map(entry -> String.format(CONTENT_ORDER_MENU.toString(), entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public int totalAmount() {
+        AtomicInteger totalAmount = new AtomicInteger();
+        menus.forEach((menu, count) -> totalAmount.addAndGet(menu.getPrice() * count));
+        return totalAmount.get();
     }
 }
