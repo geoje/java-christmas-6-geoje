@@ -88,7 +88,7 @@ public class Order {
     }
 
     private static void validateNotOnlyDrink(Map<Menu, Integer> menus) {
-        if (menus.keySet().stream().allMatch(menu -> menu.getType().equals(MenuType.DRINK))) {
+        if (!menus.isEmpty() && menus.keySet().stream().allMatch(menu -> menu.getType().equals(MenuType.DRINK))) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
