@@ -1,5 +1,8 @@
 package christmas.constant;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", MenuType.APPETIZER, 6000),
     TAPAS("타파스", MenuType.APPETIZER, 5500),
@@ -25,6 +28,10 @@ public enum Menu {
         this.name = name;
         this.type = type;
         this.price = price;
+    }
+
+    public static Optional<Menu> getByName(String name) {
+        return Arrays.stream(values()).filter(menu -> menu.name.equals(name)).findFirst();
     }
 
     public String getName() {
