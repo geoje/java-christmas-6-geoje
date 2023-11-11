@@ -72,6 +72,15 @@ public class OrderTest {
     }
 
     @ParameterizedTest
+    @DisplayName("음료만 시켰을 경우 예외 발생")
+    @ValueSource(strings = {"제로콜라-1,레드와인-1"})
+    void validateNotOnlyDrink(String menus) {
+        assertThatCode(() -> Order.from(menus))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(ORDER_INVALID.toString());
+    }
+
+    @ParameterizedTest
     @DisplayName("메뉴를 최대 수량 이상 시켰을 경우 예외 발생")
     @ValueSource(strings = {"해산물파스타-11,레드와인-10"})
     void validateMaxMenuCount(String menus) {
