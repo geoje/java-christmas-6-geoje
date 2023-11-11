@@ -8,6 +8,7 @@ import christmas.view.OutputView;
 import java.util.function.Supplier;
 
 import static christmas.constant.PromotionCalendar.PERIOD_MONTH;
+import static christmas.constant.ReceiptMessage.TITLE_ORDER_MENU;
 
 public class XmasController {
     public static void run() {
@@ -46,5 +47,6 @@ public class XmasController {
     }
 
     private static void notifyPromotions(VisitingDay visitingDay, Order order) {
+        OutputView.printReceiptMessage(TITLE_ORDER_MENU, order.toString());
     }
 }
