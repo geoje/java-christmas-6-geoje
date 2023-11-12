@@ -114,4 +114,11 @@ public class Order {
         menus.forEach((menu, count) -> totalAmount.addAndGet(menu.getPrice() * count));
         return totalAmount.get();
     }
+
+    public int countMenuType(MenuType type) {
+        return menus.entrySet().stream()
+                .filter(entry -> entry.getKey().getType().equals(type))
+                .mapToInt(Map.Entry::getValue)
+                .sum();
+    }
 }
