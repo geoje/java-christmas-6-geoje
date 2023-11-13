@@ -11,7 +11,7 @@ public enum ReceiptMessage {
 
     CONTENT_ORDER_MENU("%s %d개"),
     CONTENT_AMOUNT("%s원"),
-    CONTENT_BENEFIT("%s: %s원"),
+    CONTENT_BENEFIT("%s: %s"),
     CONTENT_NOTHING("없음"),
 
     BENEFIT_D_DAY("크리스마스 디데이 할인"),
