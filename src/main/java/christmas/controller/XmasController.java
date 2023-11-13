@@ -52,7 +52,7 @@ public class XmasController {
     private static void notifyOrder(Order order) {
         OutputView.printReceiptMessage(TITLE_ORDER_MENU, order.toString());
         OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT,
-                String.format(CONTENT_AMOUNT.toString(), OutputView.formatAmount(order.totalAmount())));
+                String.format(CONTENT_AMOUNT.toString(), OutputView.formatAmount(order.menus().totalAmount())));
     }
 
     private static void notifyPromotion(XmasPromotion promotion) {

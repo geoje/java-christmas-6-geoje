@@ -6,27 +6,21 @@ import christmas.constant.MenuType;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static christmas.constant.ErrorMessage.ORDER_INVALID;
 import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
-import static christmas.constant.ReceiptMessage.CONTENT_NOTHING;
-import static christmas.constant.ReceiptMessage.CONTENT_ORDER_MENU;
 
-public class Order {
+public record Order(Menus menus) {
     private static final String MENU_ENTRY_DELIMITER = ",";
     private static final String MENU_NAME_COUNT_DELIMITER = "-";
     private static final int MAX_MENU_COUNT = 20;
     private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
 
-    private final Map<Menu, Integer> menus;
-
-    public Order(Map<Menu, Integer> menus) {
+    public Order {
         validateMaxMenuCount(menus);
         validateNotOnlyDrink(menus);
-        this.menus = menus;
     }
 
     public static Order from(String menus) {
@@ -34,7 +28,7 @@ public class Order {
                 .filter(menu -> !menu.isBlank())
                 .map(Order::parseNameAndCountWithValidation)
                 .toList();
-        return new Order(convertEntriesToMapWithValidation(entries));
+        return new Order(convertListToMapWithValidation(entries));
     }
 
     private static Map.Entry<Menu, Integer> parseNameAndCountWithValidation(String menu) {
@@ -51,9 +45,9 @@ public class Order {
         return Map.entry(Menu.getByName(name).get(), parsedCount);
     }
 
-    private static Map<Menu, Integer> convertEntriesToMapWithValidation(List<Map.Entry<Menu, Integer>> menus) {
+    private static Menus convertListToMapWithValidation(List<Map.Entry<Menu, Integer>> menus) {
         validateNotDuplicated(menus);
-        return menus.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return new Menus(menus.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
     }
 
     private static void validateNameCountDelimiter(String menu) {
@@ -87,38 +81,20 @@ public class Order {
         }
     }
 
-    private static void validateNotOnlyDrink(Map<Menu, Integer> menus) {
-        if (!menus.isEmpty() && menus.keySet().stream().allMatch(menu -> menu.getType().equals(MenuType.DRINK))) {
+    private static void validateNotOnlyDrink(Menus menus) {
+        if (menus.totalCount() > 0 && menus.totalCount() == menus.countMenuType(MenuType.DRINK)) {
             throw new IllegalArgumentException(ORDER_INVALID.toString());
         }
     }
 
-    private static void validateMaxMenuCount(Map<Menu, Integer> menus) {
-        if (menus.values().stream().mapToInt(Integer::intValue).sum() > MAX_MENU_COUNT) {
+    private static void validateMaxMenuCount(Menus menus) {
+        if (menus.totalCount() > MAX_MENU_COUNT) {
             throw new IllegalArgumentException(ORDER_MENU_COUNT_EXCEED.toString());
         }
     }
 
     @Override
     public String toString() {
-        if (menus.isEmpty()) {
-            return CONTENT_NOTHING.toString();
-        }
-        return menus.entrySet().stream()
-                .map(entry -> String.format(CONTENT_ORDER_MENU.toString(), entry.getKey().getName(), entry.getValue()))
-                .collect(Collectors.joining(System.lineSeparator()));
-    }
-
-    public int totalAmount() {
-        AtomicInteger totalAmount = new AtomicInteger();
-        menus.forEach((menu, count) -> totalAmount.addAndGet(menu.getPrice() * count));
-        return totalAmount.get();
-    }
-
-    public int countMenuType(MenuType type) {
-        return menus.entrySet().stream()
-                .filter(entry -> entry.getKey().getType().equals(type))
-                .mapToInt(Map.Entry::getValue)
-                .sum();
+        return menus.toString();
     }
 }

@@ -16,7 +16,7 @@ public class OrderTest {
     @DisplayName("메뉴가 없는 주문 생성")
     void newWithoutMenu() {
         assertThatCode(() -> {
-            new Order(Map.of());
+            new Order(new Menus(Map.of()));
         }).doesNotThrowAnyException();
     }
 

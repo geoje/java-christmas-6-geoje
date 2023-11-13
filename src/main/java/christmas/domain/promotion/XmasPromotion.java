@@ -2,13 +2,16 @@ package christmas.domain.promotion;
 
 import christmas.constant.MenuType;
 import christmas.constant.ReceiptMessage;
+import christmas.domain.Menus;
 import christmas.domain.Order;
 import christmas.domain.VisitingDay;
+import christmas.view.OutputView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static christmas.constant.Menu.CHAMPAGNE;
 import static christmas.constant.ReceiptMessage.*;
@@ -30,11 +33,11 @@ public class XmasPromotion {
         this.order = order;
     }
 
-    public Order giftMenu() {
-        if (order.totalAmount() >= AMOUNT_GIFT_CONDITION) {
-            return new Order(Map.of(CHAMPAGNE, 1));
+    public Menus giftMenu() {
+        if (order.menus().totalAmount() >= AMOUNT_GIFT_CONDITION) {
+            return new Menus(Map.of(CHAMPAGNE, 1));
         }
-        return new Order(Map.of());
+        return new Menus(Map.of());
     }
 
     public Map<ReceiptMessage, Integer> benefits() {
@@ -42,23 +45,36 @@ public class XmasPromotion {
 
         getMenuDiscount().forEach(entry -> result.put(entry.getKey(), entry.getValue()));
         getTotalDiscount().forEach(entry -> result.put(entry.getKey(), entry.getValue()));
-        if (SPECIAL_DAYS.contains(visitingDay.day())) {
-            result.put(BENEFIT_SPECIAL, AMOUNT_SPECIAL_DAY_DISCOUNT);
+        Menus giftMenu = giftMenu();
+        if (giftMenu.totalAmount() > 0) {
+            result.put(BENEFIT_GIFT, giftMenu().totalAmount());
         }
 
         return result;
     }
 
+    public String buildBenefitsAsString() {
+        Map<ReceiptMessage, Integer> benefits = benefits();
+        if (benefits.isEmpty()) {
+            return CONTENT_NOTHING.toString();
+        }
+        return benefits.entrySet().stream()
+                .map(entry -> String.format(CONTENT_BENEFIT.toString(),
+                        entry.getKey().toString(),
+                        OutputView.formatAmount(-entry.getValue())))
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
     private List<Map.Entry<ReceiptMessage, Integer>> getMenuDiscount() {
         List<Map.Entry<ReceiptMessage, Integer>> discounts = new ArrayList<>();
 
-        if (visitingDay.isWeekday()) {
-            discounts.add(Map.entry(BENEFIT_WEEKDAY,
-                    DISCOUNT_WEEKDAY_OR_WEEKEND * order.countMenuType(MenuType.DESSERT)));
+        int dessertCount = order.menus().countMenuType(MenuType.DESSERT);
+        int mainCount = order.menus().countMenuType(MenuType.MAIN);
+        if (visitingDay.isWeekday() && dessertCount > 0) {
+            discounts.add(Map.entry(BENEFIT_WEEKDAY, DISCOUNT_WEEKDAY_OR_WEEKEND * dessertCount));
         }
-        if (visitingDay.isWeekend()) {
-            discounts.add(Map.entry(BENEFIT_WEEKEND,
-                    DISCOUNT_WEEKDAY_OR_WEEKEND * order.countMenuType(MenuType.MAIN)));
+        if (visitingDay.isWeekend() && mainCount > 0) {
+            discounts.add(Map.entry(BENEFIT_WEEKEND, DISCOUNT_WEEKDAY_OR_WEEKEND * mainCount));
         }
         return discounts;
     }
@@ -83,6 +99,6 @@ public class XmasPromotion {
     public int amountAfterDiscount() {
         Map<ReceiptMessage, Integer> benefits = benefits();
         benefits.remove(TITLE_GIFT_MENU);
-        return order.totalAmount() - benefits.values().stream().mapToInt(v -> v).sum();
+        return order.menus().totalAmount() - benefits.values().stream().mapToInt(v -> v).sum();
     }
 }
