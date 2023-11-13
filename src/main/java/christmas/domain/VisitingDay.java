@@ -34,8 +34,8 @@ public record VisitingDay(int day) {
 
     public boolean isWeekend() {
         Calendar calendar = PromotionCalendar.getPeriodCalendarWithDay(day);
-        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY ||
-                calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY;
+        return calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY ||
+                calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY;
     }
 
     public boolean isWeekday() {
