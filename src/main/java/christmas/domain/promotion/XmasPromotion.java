@@ -92,9 +92,9 @@ public class XmasPromotion {
     }
 
     public int amountAfterDiscount() {
-        Map<ReceiptMessage, Integer> benefits = benefits();
-        benefits.remove(TITLE_GIFT_MENU);
-        return order.menus().totalAmount() - benefits().values().stream().mapToInt(v -> v).sum();
+        Map<ReceiptMessage, Integer> benefitsWithoutGift = benefits();
+        benefitsWithoutGift.remove(BENEFIT_GIFT);
+        return order.menus().totalAmount() - benefitsWithoutGift.values().stream().mapToInt(v -> v).sum();
     }
 
     public Badge badge() {
