@@ -34,7 +34,7 @@ public class VisitingDayTest {
     }
 
     @ParameterizedTest
-    @DisplayName("날짜가 이벤트 기간 중아 아닐 경우 예외 발생")
+    @DisplayName("날짜가 이벤트 기간 중이 아닐 경우 예외 발생")
     @ValueSource(ints = {-1, 0, 32})
     void validateCanPeriodDay(int day) {
         assertThatCode(() -> new VisitingDay(day))
@@ -43,14 +43,14 @@ public class VisitingDayTest {
     }
 
     @Test
-    @DisplayName("2023년 12월 10일 일요일이 주말 인지 판별")
+    @DisplayName("2023년 12월 9일 토요일이 주말 할인이 될지 판별")
     void isWeekend() {
-        assertThat(new VisitingDay(10).isWeekend()).isEqualTo(true);
+        assertThat(new VisitingDay(9).isWeekendDiscount()).isEqualTo(true);
     }
 
     @Test
-    @DisplayName("2023년 12월 8일 금요일이 평일 인지 판별")
+    @DisplayName("2023년 12월 10일 일요일에 평일 할인이 될지 판별")
     void isWeekday() {
-        assertThat(new VisitingDay(8).isWeekday()).isEqualTo(true);
+        assertThat(new VisitingDay(10).isWeekdayDiscount()).isEqualTo(true);
     }
 }
