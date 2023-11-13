@@ -21,7 +21,7 @@ public class XmasPromotionTest {
     @DisplayName("혜택 내역")
     @CsvSource(value = {
             "26/타파스-1,제로콜라-1/없음",
-            "3/티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1/증정 이벤트: -25,000원|크리스마스 디데이 할인: -1,200원|특별 할인: -1,000원|주말 할인: -4,046원"
+            "3/티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1/증정 이벤트: -25,000원|크리스마스 디데이 할인: -1,200원|특별 할인: -1,000원|평일 할인: -4,046원"
     }, delimiter = '/')
     void benefits(int day, String order, String results) {
         XmasPromotion promotion = new XmasPromotion(new VisitingDay(day), Order.from(order));
