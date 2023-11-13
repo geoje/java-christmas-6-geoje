@@ -58,18 +58,6 @@ public class XmasPromotion {
         return result;
     }
 
-    public String buildBenefitsAsString() {
-        Map<ReceiptMessage, Integer> benefits = benefits();
-        if (benefits.isEmpty()) {
-            return CONTENT_NOTHING.toString();
-        }
-        return benefits.entrySet().stream()
-                .map(entry -> String.format(CONTENT_BENEFIT.toString(),
-                        entry.getKey().toString(),
-                        formatAmount(-entry.getValue())))
-                .collect(Collectors.joining(System.lineSeparator()));
-    }
-
     private List<Map.Entry<ReceiptMessage, Integer>> findMenuDiscount() {
         List<Map.Entry<ReceiptMessage, Integer>> discounts = new ArrayList<>();
 
@@ -101,14 +89,26 @@ public class XmasPromotion {
         return benefits().values().stream().mapToInt(v -> v).sum();
     }
 
-    public String buildAmountBenefitsAsString() {
-        return formatAmount(-amountBenefits());
-    }
-
     public int amountAfterDiscount() {
         Map<ReceiptMessage, Integer> benefits = benefits();
         benefits.remove(TITLE_GIFT_MENU);
         return order.menus().totalAmount() - benefits().values().stream().mapToInt(v -> v).sum();
+    }
+
+    public String buildBenefitsAsString() {
+        Map<ReceiptMessage, Integer> benefits = benefits();
+        if (benefits.isEmpty()) {
+            return CONTENT_NOTHING.toString();
+        }
+        return benefits.entrySet().stream()
+                .map(entry -> String.format(CONTENT_BENEFIT.toString(),
+                        entry.getKey().toString(),
+                        formatAmount(-entry.getValue())))
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public String buildAmountBenefitsAsString() {
+        return formatAmount(-amountBenefits());
     }
 
     public String buildAmountAfterDiscountAsString() {
