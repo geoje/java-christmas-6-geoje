@@ -75,10 +75,10 @@ public class XmasPromotion {
 
         int dessertCount = order.menus().countMenuType(MenuType.DESSERT);
         int mainCount = order.menus().countMenuType(MenuType.MAIN);
-        if (visitingDay.isWeekday() && dessertCount > 0) {
+        if (visitingDay.isWeekdayDiscount() && dessertCount > 0) {
             discounts.add(Map.entry(BENEFIT_WEEKDAY, DISCOUNT_WEEKDAY_OR_WEEKEND * dessertCount));
         }
-        if (visitingDay.isWeekend() && mainCount > 0) {
+        if (visitingDay.isWeekendDiscount() && mainCount > 0) {
             discounts.add(Map.entry(BENEFIT_WEEKEND, DISCOUNT_WEEKDAY_OR_WEEKEND * mainCount));
         }
         return discounts;
