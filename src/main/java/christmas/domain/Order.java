@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.constant.Menu;
 import christmas.constant.MenuType;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,14 @@ import java.util.stream.Collectors;
 
 import static christmas.constant.ErrorMessage.ORDER_INVALID;
 import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
+import static christmas.constant.ReceiptMessage.CONTENT_AMOUNT;
 
 public record Order(Menus menus) {
     private static final String MENU_ENTRY_DELIMITER = ",";
     private static final String MENU_NAME_COUNT_DELIMITER = "-";
     private static final int MAX_MENU_COUNT = 20;
     private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#,###");
 
     public Order {
         validateMaxMenuCount(menus);
@@ -91,6 +94,10 @@ public record Order(Menus menus) {
         if (menus.totalCount() > MAX_MENU_COUNT) {
             throw new IllegalArgumentException(ORDER_MENU_COUNT_EXCEED.toString());
         }
+    }
+
+    public String buildTotalAmountAsString() {
+        return String.format(CONTENT_AMOUNT.toString(), FORMATTER.format(menus.totalAmount()));
     }
 
     @Override
