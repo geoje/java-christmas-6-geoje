@@ -1,5 +1,6 @@
 package christmas.domain.promotion;
 
+import christmas.constant.Badge;
 import christmas.constant.MenuType;
 import christmas.constant.ReceiptMessage;
 import christmas.domain.Menus;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static christmas.constant.Badge.*;
 import static christmas.constant.Menu.CHAMPAGNE;
 import static christmas.constant.ReceiptMessage.*;
 
@@ -95,6 +97,19 @@ public class XmasPromotion {
         return order.menus().totalAmount() - benefits().values().stream().mapToInt(v -> v).sum();
     }
 
+    public Badge badge() {
+        if (amountBenefits() >= 20000) {
+            return SANTA;
+        }
+        if (amountBenefits() >= 10000) {
+            return TREE;
+        }
+        if (amountBenefits() >= 5000) {
+            return STAR;
+        }
+        return NOTHING;
+    }
+
     public String buildBenefitsAsString() {
         Map<ReceiptMessage, Integer> benefits = benefits();
         if (benefits.isEmpty()) {
@@ -114,4 +129,5 @@ public class XmasPromotion {
     public String buildAmountAfterDiscountAsString() {
         return formatAmount(amountAfterDiscount());
     }
+
 }
