@@ -59,5 +59,6 @@ public class XmasController {
         OutputView.printReceiptMessage(TITLE_BENEFIT_DETAILS, promotion.buildBenefitsAsString());
         OutputView.printReceiptMessage(TITLE_TOTAL_BENEFIT_AMOUNT, promotion.buildAmountBenefitsAsString());
         OutputView.printReceiptMessage(TITLE_AMOUNT_AFTER_DISCOUNT, promotion.buildAmountAfterDiscountAsString());
+        OutputView.printReceiptMessage(TITLE_EVENT_BADGE, promotion.badge().toString(), PERIOD_MONTH.getRealMonth());
     }
 }
