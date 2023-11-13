@@ -3,12 +3,14 @@ package christmas.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
 import static christmas.constant.ErrorMessage.ORDER_INVALID;
 import static christmas.constant.ErrorMessage.ORDER_MENU_COUNT_EXCEED;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class OrderTest {
@@ -35,6 +37,13 @@ public class OrderTest {
     @ValueSource(strings = {" , ,,해산물파스타-2,레드와인-1, ,,"})
     void fromFlexible(String menus) {
         assertThatCode(() -> Order.from(menus)).doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @DisplayName("할인 전 총주문 금액")
+    @CsvSource(value = {"타파스-1,제로콜라-1/8500", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1/142000"}, delimiter = '/')
+    void giftMenu(String menus, int amount) {
+        assertThat(Order.from(menus).menus().totalAmount()).isEqualTo(amount);
     }
 
     @ParameterizedTest
