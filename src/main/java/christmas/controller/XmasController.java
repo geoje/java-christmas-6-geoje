@@ -51,11 +51,13 @@ public class XmasController {
 
     private static void notifyOrder(Order order) {
         OutputView.printReceiptMessage(TITLE_ORDER_MENU, order.toString());
-        OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT,
-                String.format(CONTENT_AMOUNT.toString(), OutputView.formatAmount(order.menus().totalAmount())));
+        OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT, order.buildTotalAmountAsString());
     }
 
     private static void notifyPromotion(XmasPromotion promotion) {
         OutputView.printReceiptMessage(TITLE_GIFT_MENU, promotion.giftMenu().toString());
+        OutputView.printReceiptMessage(TITLE_BENEFIT_DETAILS, promotion.buildBenefitsAsString());
+        OutputView.printReceiptMessage(TITLE_TOTAL_BENEFIT_AMOUNT, promotion.buildAmountBenefitsAsString());
+        OutputView.printReceiptMessage(TITLE_AMOUNT_AFTER_DISCOUNT, promotion.buildAmountAfterDiscountAsString());
     }
 }
