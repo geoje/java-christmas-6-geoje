@@ -51,8 +51,8 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    @DisplayName("혜택이 없는 주문")
-    void runningExample1() {
+    @DisplayName("혜택과 배지가 없는 주문")
+    void case1() {
         assertSimpleTest(() -> {
             run("26", "타파스-1,제로콜라-1");
             assertThat(output()).contains(
@@ -69,8 +69,47 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    @DisplayName("4개의 혜택을 받는 주문")
-    void runningExample2() {
+    @DisplayName("혜택 3가지로 배지가 별인 주문")
+    void case2() {
+        assertSimpleTest(() -> {
+            run("2", "티본스테이크-1,바비큐립-1,제로콜라-1");
+            assertThat(output()).contains(
+                    "티본스테이크 1개",
+                    "바비큐립 1개",
+                    "제로콜라 1개",
+                    "<할인 전 총주문 금액>\r\n112,000원",
+                    "<증정 메뉴>\r\n없음",
+                    "크리스마스 디데이 할인: -1,100원",
+                    "주말 할인: -4,046원",
+                    "<총혜택 금액>\r\n-5,146원",
+                    "<할인 후 예상 결제 금액>\r\n106,854원",
+                    "<12월 이벤트 배지>\r\n별"
+            );
+        });
+    }
+
+    @Test
+    @DisplayName("혜택 3가지로 배지가 트리인 주문")
+    void case3() {
+        assertSimpleTest(() -> {
+            run("25", "아이스크림-5");
+            assertThat(output()).contains(
+                    "아이스크림 5개",
+                    "<할인 전 총주문 금액>\r\n25,000원",
+                    "<증정 메뉴>\r\n없음",
+                    "크리스마스 디데이 할인: -3,400원",
+                    "평일 할인: -10,115원",
+                    "특별 할인: -1,000원",
+                    "<총혜택 금액>\r\n-14,515원",
+                    "<할인 후 예상 결제 금액>\r\n10,485원",
+                    "<12월 이벤트 배지>\r\n트리"
+            );
+        });
+    }
+
+    @Test
+    @DisplayName("혜택 4가지로 배지가 산타인 주문")
+    void case4() {
         assertSimpleTest(() -> {
             run("3", "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
             assertThat(output()).contains(
@@ -87,6 +126,25 @@ class ApplicationTest extends NsTest {
                     "<총혜택 금액>\r\n-31,246원",
                     "<할인 후 예상 결제 금액>\r\n135,754원",
                     "<12월 이벤트 배지>\r\n산타"
+            );
+        });
+    }
+
+    @Test
+    @DisplayName("이벤트에서 나올 수 있는 최대 84% 할인")
+    void case5() {
+        assertSimpleTest(() -> {
+            run("25", "아이스크림-2");
+            assertThat(output()).contains(
+                    "아이스크림 2개",
+                    "<할인 전 총주문 금액>\r\n10,000원",
+                    "<증정 메뉴>\r\n없음",
+                    "크리스마스 디데이 할인: -3,400원",
+                    "평일 할인: -4,046원",
+                    "특별 할인: -1,000원",
+                    "<총혜택 금액>\r\n-8,446원",
+                    "<할인 후 예상 결제 금액>\r\n1,554원",
+                    "<12월 이벤트 배지>\r\n별"
             );
         });
     }
