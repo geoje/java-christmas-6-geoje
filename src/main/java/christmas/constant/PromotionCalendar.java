@@ -3,7 +3,7 @@ package christmas.constant;
 import java.util.Calendar;
 
 public enum PromotionCalendar {
-    PERIOD_MONTH(2023, Calendar.DECEMBER, 1);
+    PERIOD_MONTH(2024, Calendar.JANUARY, 1);
 
     private final Calendar calendar;
 

@@ -18,7 +18,8 @@ public enum ReceiptMessage {
     BENEFIT_WEEKDAY("평일 할인"),
     BENEFIT_WEEKEND("주말 할인"),
     BENEFIT_SPECIAL("특별 할인"),
-    BENEFIT_GIFT("증정 이벤트");
+    BENEFIT_GIFT("증정 이벤트"),
+    BENEFIT_DRINK_FRIDAY("불금은 마셔");
 
 
     private final String message;

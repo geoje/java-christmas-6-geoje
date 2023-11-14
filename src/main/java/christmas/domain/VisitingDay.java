@@ -41,4 +41,9 @@ public record VisitingDay(int day) {
     public boolean isWeekdayDiscount() {
         return !isWeekendDiscount();
     }
+
+    public boolean isDayOfWeek(int dayOfWeek) {
+        Calendar calendar = PromotionCalendar.getPeriodCalendarWithDay(day);
+        return calendar.get(Calendar.DAY_OF_WEEK) == dayOfWeek;
+    }
 }

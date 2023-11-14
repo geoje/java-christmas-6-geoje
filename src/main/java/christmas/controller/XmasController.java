@@ -2,13 +2,13 @@ package christmas.controller;
 
 import christmas.domain.Order;
 import christmas.domain.VisitingDay;
-import christmas.domain.promotion.Promotion;
-import christmas.domain.promotion.XmasPromotion;
+import christmas.domain.promotion.NewyearPromotion;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
 import java.util.function.Supplier;
 
+import static christmas.constant.Badge.STAR;
 import static christmas.constant.PromotionCalendar.PERIOD_MONTH;
 import static christmas.constant.ReceiptMessage.*;
 
@@ -20,7 +20,7 @@ public class XmasController {
 
         notifyPreview(visitingDay);
         notifyOrder(order);
-        notifyPromotion(new XmasPromotion(visitingDay, order));
+        notifyPromotion(new NewyearPromotion(visitingDay, order, STAR));
     }
 
     private static <T> T requestUntilValidated(Supplier<T> supplier) {
@@ -55,7 +55,7 @@ public class XmasController {
         OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT, order.buildTotalAmountAsString());
     }
 
-    private static void notifyPromotion(Promotion promotion) {
+    private static void notifyPromotion(NewyearPromotion promotion) {
         OutputView.printReceiptMessage(TITLE_GIFT_MENU, promotion.giftMenu().toString());
         OutputView.printReceiptMessage(TITLE_BENEFIT_DETAILS, promotion.buildBenefitsAsString());
         OutputView.printReceiptMessage(TITLE_TOTAL_BENEFIT_AMOUNT, promotion.buildAmountBenefitsAsString());
