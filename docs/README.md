@@ -1,14 +1,17 @@
 # 🎅 우테코 프리코스 3주차 - 크리스마스 프로모션
 
-우테코 프리코스 4주차 미션 **크리스마스 프로모션** 은 비즈니스팀에서 개발팀으로부터 이벤트 메일이 왔고 해당 메일의 내용을 반영해 시스템을 만드는 것입니다.
+우테코 프리코스 4주차 미션 **크리스마스 프로모션** 은 비즈니스팀에서 온 이벤트 메일을 바탕으로 시스템을 만드는 것입니다.
 
 크리스마스를 맞이하여 `12월` 한 달간 각종 물건들에 대해 할인을 하여 최대한 많은 고객을 끌어모아 일부는 새해 이벤트에도 참여하게 하는 것이 목표 입니다.
+
+해당 프로그램 에서는 방문할 날짜와 주문 내역을 입력 하여 여러 혜택들을 어떻게 얼마나 받을 수 있는지 살펴볼 수 있습니다.
 
 ---
 
 ## 🔍 목차
 
 - ⚙️ 구현할 기능 목록
+- 📋 프로젝트 구조
 - 🎊 새해 때의 새로운 이벤트
 
 ---
@@ -310,6 +313,96 @@
     </li>
 </ul></td>
 </tr>
+</table>
+
+---
+
+## 📋 프로젝트 구조
+
+### 📦 패키지
+
+<table>
+    <tr>
+        <th>Package</th>
+        <th>Class</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td rowspan="7">
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/constants.svg?sanitize=true"/>
+            <b> constant</b>
+        </td>
+        <td><b>Badge</b></td>
+        <td>총 헤택 금액에 따라 받을 수 있는 배지</td>
+    </tr>
+    <tr>
+        <td><b>ErrorMessage</b></td>
+        <td>예외 상황에 사용 되는 정적 메세지</td>
+    </tr>
+    <tr>
+        <td><b>GeneralMessage</b></td>
+        <td>일반 적인 입력 요청 또는 결과 알림에 사용 되는 메세지</td>
+    </tr>
+    <tr>
+        <td><b>Menu</b></td>
+        <td>메뉴 이름과 종류 및 가격에 대한 정보</td>
+    </tr>
+    <tr>
+        <td><b>MenuType</b></td>
+        <td>메뉴 정보에 사용 될 메뉴 종류</td>
+    </tr>
+    <tr>
+        <td><b>PromotionCalendar</b></td>
+        <td>이벤트 기간 날짜</td>
+    </tr>
+    <tr>
+        <td><b>ReceiptMessage</b></td>
+        <td>혜택 내역에 대한 내용</td>
+    </tr>
+    <tr>
+        <td>
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/controllers.svg?sanitize=true"/>
+            <b> controller</b>
+        </td>
+        <td><b>XmasController</b></td>
+        <td>입력을 받아 계산하고 출력 해주는 전체 진행 담당 컨트롤러</td>
+    </tr>
+    <tr>
+        <td rowspan="5">
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/home.svg?sanitize=true"/>
+            <b> domain</b>
+        </td>
+        <td><b>Promotion</b></td>
+        <td>방문할 날짜와 주문에 대해 혜택 내역을 담당할 추상클래스</td>
+    </tr>
+    <tr>
+        <td><b>XmasPromotion</b></td>
+        <td><code>Promotion</code> 클래스를 구현하는 크리스마스 이벤트 담당 클래스</td>
+    </tr>
+    <tr>
+        <td><b>Menus</b></td>
+        <td>메뉴와 개수 세트들을 담당하는 클래스</td>
+    </tr>
+    <tr>
+        <td><b>Order</b></td>
+        <td><code>Menus</code> 객체를 필드로 가지며 여러 검증을 해주는 레코드</td>
+    </tr>
+    <tr>
+        <td><b>VisitingDay</b></td>
+        <td>방문할 날짜를 정수로 가지며 여러 검증을 해주는 레코드</td>
+    </tr>
+    <tr>
+        <td rowspan="2">
+            <img src="https://raw.githubusercontent.com/mallowigi/iconGenerator/master/assets/icons/folders/views.svg?sanitize=true"/>
+            <b> view</b>
+        </td>
+        <td><b>InputView</b></td>
+        <td>사용자에게 질문을 하고 입력을 받아주는 뷰</td>
+    </tr>
+    <tr>
+        <td><b>OutputView</b></td>
+        <td>사용자에게 일반적인 메세지와 결과 및 에외 메세지를 출력해주는 뷰</td>
+    </tr>
 </table>
 
 ---
