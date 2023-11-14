@@ -44,13 +44,13 @@ public class VisitingDayTest {
 
     @Test
     @DisplayName("2023년 12월 9일 토요일이 주말 할인이 될지 판별")
-    void isWeekend() {
+    void isWeekendDiscount() {
         assertThat(new VisitingDay(9).isWeekendDiscount()).isEqualTo(true);
     }
 
     @Test
     @DisplayName("2023년 12월 10일 일요일에 평일 할인이 될지 판별")
-    void isWeekday() {
+    void isWeekdayDiscount() {
         assertThat(new VisitingDay(10).isWeekdayDiscount()).isEqualTo(true);
     }
 }
