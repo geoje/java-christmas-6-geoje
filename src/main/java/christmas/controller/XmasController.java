@@ -2,6 +2,7 @@ package christmas.controller;
 
 import christmas.domain.Order;
 import christmas.domain.VisitingDay;
+import christmas.domain.promotion.Promotion;
 import christmas.domain.promotion.XmasPromotion;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -54,7 +55,7 @@ public class XmasController {
         OutputView.printReceiptMessage(TITLE_AMOUNT_BEFORE_DISCOUNT, order.buildTotalAmountAsString());
     }
 
-    private static void notifyPromotion(XmasPromotion promotion) {
+    private static void notifyPromotion(Promotion promotion) {
         OutputView.printReceiptMessage(TITLE_GIFT_MENU, promotion.giftMenu().toString());
         OutputView.printReceiptMessage(TITLE_BENEFIT_DETAILS, promotion.buildBenefitsAsString());
         OutputView.printReceiptMessage(TITLE_TOTAL_BENEFIT_AMOUNT, promotion.buildAmountBenefitsAsString());
