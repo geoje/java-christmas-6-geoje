@@ -33,7 +33,7 @@ public class OrderTest {
     }
 
     @ParameterizedTest
-    @DisplayName("없는 메뉴 제거 후 어느정도 유연한 생성")
+    @DisplayName("입력 중 없는 메뉴 제거 후 유연한 생성")
     @ValueSource(strings = {" , ,,해산물파스타-2,레드와인-1, ,,"})
     void fromFlexible(String menus) {
         assertThatCode(() -> Order.from(menus)).doesNotThrowAnyException();
@@ -107,5 +107,20 @@ public class OrderTest {
         assertThatCode(() -> Order.from(menus))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ORDER_MENU_COUNT_EXCEED.toString());
+    }
+
+    @ParameterizedTest
+    @DisplayName("주문 총 금액 출력")
+    @ValueSource(strings = {"해산물파스타-2,레드와인-1"})
+    void buildTotalAmountAsString(String menus) {
+        assertThat(Order.from(menus).buildTotalAmountAsString())
+                .contains("130,000원");
+    }
+
+    @Test
+    @DisplayName("메뉴 목록 출력")
+    void stringify() {
+        Order order = Order.from("타파스-1,아이스크림-2,초코케이크-3");
+        assertThat(order.toString()).contains("타파스 1개", "아이스크림 2개", "초코케이크 3개");
     }
 }
