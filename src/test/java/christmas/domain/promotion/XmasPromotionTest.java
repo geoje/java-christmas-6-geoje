@@ -18,7 +18,7 @@ public class XmasPromotionTest {
     }
 
     @ParameterizedTest
-    @DisplayName("혜택 내역")
+    @DisplayName("혜택 내역 및 출력")
     @CsvSource(value = {
             "26/타파스-1,제로콜라-1/없음",
             "3/티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1/증정 이벤트: -25,000원|크리스마스 디데이 할인: -1,200원|특별 할인: -1,000원|평일 할인: -4,046원"
@@ -51,5 +51,16 @@ public class XmasPromotionTest {
     void amountAfterDiscount(int day, String order, int amount) {
         XmasPromotion promotion = new XmasPromotion(new VisitingDay(day), Order.from(order));
         assertThat(promotion.amountAfterDiscount()).isEqualTo(amount);
+    }
+
+    @ParameterizedTest
+    @DisplayName("총헤택 금액에 따른 배지")
+    @CsvSource(value = {
+            "26/타파스-1,제로콜라-1/없음",
+            "3/티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1/산타"
+    }, delimiter = '/')
+    void badge(int day, String order, String badge) {
+        XmasPromotion promotion = new XmasPromotion(new VisitingDay(day), Order.from(order));
+        assertThat(promotion.badge().toString()).isEqualTo(badge);
     }
 }
